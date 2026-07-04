@@ -1,0 +1,27 @@
+# ============================================================================
+# ACTIVATION REQUIRED — move this file to .github/workflows/ci.yml to enable CI.
+# It was committed here because the GitHub connection used to push these repos
+# lacked the "Workflows" permission, which is required to write under
+# .github/workflows/. Activate with either:
+#   git mv ci/ci.yml .github/workflows/ci.yml   (then commit & push), or
+#   recreate it via the GitHub web UI (Add file → Create new file).
+# ============================================================================
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run typecheck
+      - run: npm test
